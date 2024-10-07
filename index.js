@@ -2,9 +2,9 @@ const express = require('express');
 const axios = require('axios');
 const app = express();
 
-app.get('/api/react', async (req, res) => {
+app.get('/api', async (req, res) => {
     const { link, type, cookie } = req.query;
-    await axios.post("https://flikers.net/android/android_get_react.php", {
+    await axios.post("https://flikers.org/android/android_get_react.php", {
         post_id: link,
         react_type: type,
         version: "v1.7"
