@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test API</title>
+    <script>
+        async function testAPI() {
+            const link = document.getElementById('link').value;
+            const type = document.getElementById('type').value;
+            const cookie = document.getElementById('cookie').value;
+
+            try {
+                const response = await fetch(`/api?link=${link}&type=${type}&cookie=${cookie}`);
+                const data = await response.json();
+                document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('result').textContent = 'Error: ' + error;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Test API</h1>
+    <label for="link">Link:</label>
+    <input type="text" id="link" placeholder="Enter link" />
+    <br />
+    <label for="type">Type:</label>
+    <input type="text" id="type" placeholder="Enter react type" />
+    <br />
+    <label for="cookie">Cookie:</label>
+    <input type="text" id="cookie" placeholder="Enter cookie" />
+    <br />
+    <button onclick="testAPI()">Test API</button>
+    <pre id="result"></pre>
+</body>
+</html>
