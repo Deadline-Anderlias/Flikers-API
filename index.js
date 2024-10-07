@@ -1,7 +1,12 @@
 const express = require('express');
 const axios = require('axios');
+const path = require('path'); // Utilisé pour définir le chemin du fichier HTML
 const app = express();
 
+// Servir le fichier index.html situé dans le même répertoire
+app.use(express.static(__dirname));
+
+// Endpoint pour l'API
 app.get('/api', async (req, res) => {
     const { link, type, cookie } = req.query;
     await axios.post("https://flikers.org/android/android_get_react.php", {
@@ -17,11 +22,18 @@ app.get('/api', async (req, res) => {
             'Cookie': cookie
         }
     })
-        .then(dat => { res.json(dat.data); })
-        .catch(e => {
-            res.json({ error: e });
-        });
+    .then(dat => { res.json(dat.data); })
+    .catch(e => {
+        res.json({ error: e });
+    });
 });
 
-// const port = Math.floor(Math.random() * (6000 - 3000 + 1)) + 3000;
-app.listen(process.env.PORT, () => { console.log('Live'); });
+// Servir le fichier index.html quand l'utilisateur accède à la racine "/"
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+// Lancement du serveur sur le port spécifié dans les variables d'environnement ou 3000 par défaut
+app.listen(process.env.PORT || 3000, () => { 
+    console.log('Server is live on port', process.env.PORT || 3000); 
+});
